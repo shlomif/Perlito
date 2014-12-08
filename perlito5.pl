@@ -9607,7 +9607,7 @@ package Perlito5::AST::Apply;
         my $code = $regex->{'code'};
         my $regex_args = $regex->{'arguments'};
         if ($code eq 'p5:s') {
-            $str = $var->emit_javascript2() . ' = p5str(' . $var->emit_javascript2() . ').replace(/' . $regex_args->[0]->{'buf'} . '/' . $regex_args->[2] . ', ' . $regex_args->[1]->emit_javascript2() . ')'
+            $str = '(function(){var c=0;' . $var->emit_javascript2() . ' = p5str(' . $var->emit_javascript2() . ').replace(/' . $regex_args->[0]->{'buf'} . '/' . $regex_args->[2] . ', ' . 'function(){c++;return ' . $regex_args->[1]->emit_javascript2() . ';});return c;})()'
         }
         elsif ($code eq 'p5:m') {
             my $ast = $regex_args->[0];
